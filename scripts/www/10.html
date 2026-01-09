@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>电力工程安全规程考试刷题系统 - 案例10</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #2c80b9;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        .header h1 {
+            color: #2c80b9;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 16px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* 导航栏样式 */
+        .nav-bar {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+            padding: 15px;
+            border-bottom: 3px solid #2c80b9;
+        }
+        
+        .nav-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .nav-btn {
+            padding: 10px 20px;
+            background-color: #f0f8ff;
+            color: #2c80b9;
+            border: 2px solid #2c80b9;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 100px;
+            text-align: center;
+        }
+        
+        .nav-btn:hover {
+            background-color: #2c80b9;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(44, 128, 185, 0.3);
+        }
+        
+        .nav-btn.active {
+            background-color: #2c80b9;
+            color: white;
+            border-color: #1f6a9c;
+        }
+        
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .question-container {
+            flex: 1 1 700px;
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+        }
+        
+        .stats-container {
+            flex: 1 1 300px;
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            min-height: 300px;
+        }
+        
+        .question-title {
+            font-size: 20px;
+            color: #2c80b9;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .question-number {
+            display: inline-block;
+            background-color: #2c80b9;
+            color: white;
+            width: 36px;
+            height: 36px;
+            text-align: center;
+            line-height: 36px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .question-content {
+            font-size: 18px;
+            margin-bottom: 25px;
+            color: #333;
+        }
+        
+        .options-container {
+            margin: 20px 0 30px;
+        }
+        
+        .option {
+            display: block;
+            margin-bottom: 12px;
+            padding: 12px 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .option:hover {
+            background-color: #eef5fc;
+            border-color: #2c80b9;
+        }
+        
+        .option.selected {
+            background-color: #e1f0fa;
+            border-color: #2c80b9;
+            color: #2c80b9;
+            font-weight: bold;
+        }
+        
+        .option.correct {
+            background-color: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+        }
+        
+        .option.incorrect {
+            background-color: #f8d7da;
+            border-color: #dc3545;
+            color: #721c24;
+        }
+        
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .feedback.correct {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            display: block;
+        }
+        
+        .feedback.incorrect {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            display: block;
+        }
+        
+        .feedback-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .correct-answer {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #155724;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        
+        .btn-primary {
+            background-color: #2c80b9;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #1f6a9c;
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background-color: #218838;
+        }
+        
+        .btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        
+        .stats-title {
+            font-size: 20px;
+            color: #2c80b9;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .stats-content {
+            margin-bottom: 25px;
+        }
+        
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: #2c80b9;
+            border-radius: 5px;
+            transition: width 0.5s;
+        }
+        
+        .question-list {
+            margin-top: 25px;
+        }
+        
+        .question-list-title {
+            font-size: 18px;
+            color: #2c80b9;
+            margin-bottom: 15px;
+        }
+        
+        .question-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .question-nav-item {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            background-color: #f8f9fa;
+            cursor: pointer;
+            font-weight: bold;
+            border: 1px solid #e0e0e0;
+            transition: all 0.2s;
+        }
+        
+        .question-nav-item:hover {
+            background-color: #eef5fc;
+        }
+        
+        .question-nav-item.current {
+            background-color: #2c80b9;
+            color: white;
+        }
+        
+        .question-nav-item.answered {
+            background-color: #d4edda;
+            border-color: #28a745;
+        }
+        
+        .question-nav-item.answered-incorrect {
+            background-color: #f8d7da;
+            border-color: #dc3545;
+        }
+        
+        .score-display {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c80b9;
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+        }
+        
+        .case-info {
+            background-color: #f0f8ff;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-left: 4px solid #2c80b9;
+        }
+        
+        .case-title {
+            font-weight: bold;
+            color: #2c80b9;
+            margin-bottom: 10px;
+        }
+        
+        /* 图片相关样式 */
+        .diagram-container {
+            margin: 20px 0;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            background-color: #f9f9f9;
+        }
+        
+        .diagram-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c80b9;
+        }
+        
+        .diagram-image {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 5px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .image-placeholder {
+            width: 100%;
+            height: 300px;
+            background-color: #eee;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #666;
+            margin: 20px 0;
+        }
+        
+        .image-placeholder .icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        
+        .image-instructions {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #856404;
+        }
+        
+        .image-instructions h3 {
+            margin-top: 0;
+            color: #856404;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 992px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .question-container, .stats-container {
+                flex: 1 1 auto;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                gap: 8px;
+            }
+            
+            .nav-btn {
+                padding: 8px 15px;
+                font-size: 14px;
+                min-width: 80px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            body {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 22px;
+            }
+            
+            .question-content {
+                font-size: 16px;
+            }
+            
+            .btn {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+            
+            .nav-container {
+                gap: 5px;
+            }
+            
+            .nav-btn {
+                padding: 6px 10px;
+                font-size: 12px;
+                min-width: 70px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>电力工程安全规程考试刷题系统</h1>
+        <p>案例10</p>
+    </div>
+    
+    <!-- 导航栏：案例切换 -->
+    <div class="nav-bar">
+        <div class="nav-container">
+            <button class="nav-btn" onclick="window.open('1.html', '_self')">案例1</button>
+            <button class="nav-btn" onclick="window.open('2.html', '_self')">案例2</button>
+            <button class="nav-btn" onclick="window.open('3.html', '_self')">案例3</button>
+            <button class="nav-btn" onclick="window.open('4.html', '_self')">案例4</button>
+            <button class="nav-btn" onclick="window.open('5.html', '_self')">案例5</button>
+            <button class="nav-btn" onclick="window.open('6.html', '_self')">案例6</button>
+            <button class="nav-btn" onclick="window.open('7.html', '_self')">案例7</button>
+            <button class="nav-btn" onclick="window.open('8.html', '_self')">案例8</button>
+            <button class="nav-btn" onclick="window.open('9.html', '_self')">案例9</button>
+            <button class="nav-btn active" onclick="window.open('10.html', '_self')">案例10</button>
+            <button class="nav-btn" onclick="window.open('11.html', '_self')">案例11</button>
+            <button class="nav-btn" onclick="window.open('12.html', '_self')">案例12</button>
+            <button class="nav-btn" onclick="window.open('13.html', '_self')">案例13</button>
+            <button class="nav-btn" onclick="window.open('14.html', '_self')">案例14</button>
+            <button class="nav-btn" onclick="window.open('15.html', '_self')">案例15</button>
+            <button class="nav-btn" onclick="window.open('16.html', '_self')">案例16</button>
+            <button class="nav-btn" onclick="window.open('17.html', '_self')">案例17</button>
+            <button class="nav-btn" onclick="window.open('18.html', '_self')">案例18</button>
+            <button class="nav-btn" onclick="window.open('19.html', '_self')">案例19</button>
+            <button class="nav-btn" onclick="window.open('20.html', '_self')">案例20</button>
+            <button class="nav-btn" onclick="window.open('21.html', '_self')">案例21</button>
+            <button class="nav-btn" onclick="window.open('22.html', '_self')">案例22</button>
+            <button class="nav-btn" onclick="window.open('23.html', '_self')">案例23</button>
+            <button class="nav-btn" onclick="window.open('24.html', '_self')">案例24</button>
+            <button class="nav-btn" onclick="window.open('25.html', '_self')">案例25</button>
+            <button class="nav-btn" onclick="window.open('26.html', '_self')">案例26</button>
+            <button class="nav-btn" onclick="window.open('27.html', '_self')">案例27</button>
+            <button class="nav-btn" onclick="window.open('28.html', '_self')">案例28</button>
+            <button class="nav-btn" onclick="window.open('29.html', '_self')">案例29</button>
+            <button class="nav-btn" onclick="window.open('30.html', '_self')">案例30</button>
+            <button class="nav-btn" onclick="window.open('index.html', '_self')">返回首页</button>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="question-container">
+            <div class="case-info">
+                <div class="case-title">案例背景</div>
+                <div>110kV中大站10kV大新线F20桂香阁公用配电站(G3025-1504)01配变0.4kV侧4054开关出线更换桂东路1巷6号至9号段低压导线，施工作业的申请停电时间为：2019年9月11日07：00-12：00，批准工作时间为2019年9月11日08：00-11：00。XX电力工程公司XX班组工作负责人张三带领工作班成员王五、赵六、钱七、陈八开展此项工作，李四为工作票签发人。</div>
+            </div>
+            
+            <!-- 电气主接线图区域 -->
+            <div class="diagram-container">
+                <div class="diagram-title">电气主接线图</div>
+                <!-- 方法1: 使用本地图片（需要在同一目录下放置图片） -->
+                <img src="图片10.png" alt="电气主接线图" class="diagram-image" id="diagram-image">
+            
+            <div class="question-title">
+                <span class="question-number" id="current-question-number">1</span>
+                <span id="question-type">单选题</span>
+            </div>
+            
+            <div class="question-content" id="question-content">
+                题目内容加载中...
+            </div>
+            
+            <div class="options-container" id="options-container">
+                <!-- 选项将通过JavaScript动态生成 -->
+            </div>
+            
+            <div class="feedback" id="feedback">
+                <div class="feedback-title" id="feedback-title"></div>
+                <div id="feedback-content"></div>
+                <div class="correct-answer" id="correct-answer"></div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn btn-secondary" id="prev-btn" disabled>上一题</button>
+                <button class="btn btn-primary" id="submit-btn" disabled>提交答案</button>
+                <button class="btn btn-success" id="next-btn" disabled>下一题</button>
+            </div>
+        </div>
+        
+        <div class="stats-container">
+            <div class="stats-title">
+                答题统计
+            </div>
+            
+            <div class="stats-content">
+                <div class="stat-item">
+                    <span>当前进度：</span>
+                    <span id="progress-text">0/15</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+                </div>
+                
+                <div class="stat-item">
+                    <span>已答题目：</span>
+                    <span id="answered-text">0</span>
+                </div>
+                
+                <div class="stat-item">
+                    <span>正确率：</span>
+                    <span id="accuracy-text">0%</span>
+                </div>
+                
+                <div class="stat-item">
+                    <span>得分：</span>
+                    <span id="score-text">0</span>
+                </div>
+            </div>
+            
+            <div class="score-display">
+                最终得分: <span id="final-score">0</span>/15
+            </div>
+            
+            <div class="question-list">
+                <div class="question-list-title">题目导航</div>
+                <div class="question-nav" id="question-nav">
+                    <!-- 题目导航按钮将通过JavaScript动态生成 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 试题数据 - 基于参考案例10.docx
+        const questions = [
+            {
+                id: 1,
+                type: "单选题",
+                content: "因天气下雨当日未完成工作，工作需要间断时，以下正确的描述为：（）",
+                options: [
+                    "A．需办理工作间断手续，工作地点的安全措施仍保留不动，必要时派人看守",
+                    "B．恢复工作前，应检查确认各项安全措施的完整性",
+                    "C．需办理工作间断手续，工作地点的安全措施应拆除，恢复工作时，重新布置工作地点的安全措施",
+                    "D．应重新办理工作票"
+                ],
+                correctAnswer: ["C"],
+                userAnswer: null,
+                isCorrect: null
+            },
+            {
+                id: 2,
+                type: "单选题",
+                content: "该工作票为手工填写，工作票编号填写正确的是（）",
+                options: [
+                    "A．S2019-09-D6-001",
+                    "B．S2019-09-D7-001",
+                    "C．S2019-09-P7-001",
+                    "D．S2019-09-P6-001"
+                ],
+                correctAnswer: ["D"],
+                userAnswer: null,
+                isCorrect: null
+            },
+            {
+                id: 3,
+                type: "多选题",
+                content: "该工作在工作许可环节，以下描述正确的是（）",
+                options: [
+                    "A．工作许可人与工作负责人共同确认调度或运行单位负责管辖的'工作要求的安全措施'落实后，双方在各自持有工作票的相应'□'内打勾",
+                    "B．保留或邻近的带电线路、设备：工作许可人填写其责任范围内应该掌握的全面准确的保留或邻近的带电线路或设备及其状态",
+                    "C．该环节应由工作许可人对工作负责人进行安全交代，双方签名确认并填写时间",
+                    "D．未经工作许可人许可，工作负责人不得装设工作地段的安全措施"
+                ],
+                correctAnswer: ["A", "B", "C", "D"],
+                userAnswer: [],
+                isCorrect: null
+            },
+            {
+                id: 4,
+                type: "单选题",
+                content: "在工作要求的安全措施栏内安全措施填写正确的是（）",
+                options: [
+                    "A．拉开110kV中大站10kV大新线F20桂香阁公用配电站(G3025-1504)01配变0.4kV侧4054开关",
+                    "B．在110kV中大站10kV大新线F20桂香阁公用配电站(G3025-1504)01配变0.4kV侧4054开关电源侧装设接地线一组",
+                    "C．在110kV中大站10kV大新线F20桂香阁公用配电站(G3025-1504)01配变0.4kV侧4054开关操作把手上悬挂'禁止合闸，有人工作'标示牌"
+                ],
+                correctAnswer: ["C"],
+                userAnswer: null,
+                isCorrect: null
+            },
+            {
+                id: 5,
+                type: "多选题",
+                content: "以下哪些是张三的安全责任？（）",
+                options: [
+                    "A．熟悉工作内容、流程，掌握安全措施，明确工作中的危险点，并履行签名确认手续",
+                    "B．确认工作票所列安全措施正确、完备，符合现场实际条件，必要时予以补充",
+                    "C．核实已做完的所有安全措施是否符合作业安全要求",
+                    "D．正确、安全地组织工作工作前应向工作班全体人员进行安全交代关注工作人员身体和精神状况是否正常以及工作班人员变动是否合适"
+                ],
+                correctAnswer: ["B", "C", "D"],
+                userAnswer: [],
+                isCorrect: null
+            },
+            {
+                id: 6,
+                type: "多选题",
+                content: "工作负责人张三指定王五为专责监护人，对进行撤线工作的赵六、钱七、刘八进行监护，正确的是（）",
+                options: [
+                    "A．王五除明确监护对象和内容外，还应明确监护范围",
+                    "B．王五发现赵六违章作业时，应立即告知工作负责人张三进行制止",
+                    "C．王五工作前应再次交代现场安全措施，告知危险点和安全注意事项",
+                    "D．王五应对监护范围内的安全措施是否正确完备负责"
+                ],
+                correctAnswer: ["A", "C"],
+                userAnswer: [],
+                isCorrect: null
+            },
+            {
+                id: 7,
+                type: "多选题",
+                content: "该项工作填写的工作票，'应装设的接地线：线路名称及杆号'应填写（）",
+                options: [
+                    "A．10kV大新线F20桂香阁公用配电站(G3025-1504)01配变4054开关出线桂东路1巷6号小号侧",
+                    "B．10kV大新线F20桂香阁公用配电站(G3025-1504)01配变4054开关出线桂东路1巷9号大号侧",
+                    "C．10kV大新线F20桂香阁公用配电站(G3025-1504)01配变0.4kV侧4054开关出线桂东路1巷6号小号侧",
+                    "D．10kV大新线F20桂香阁公用配电站(G3025-1504)01配变0.4kV侧4054开关出线桂东路1巷9号大号侧"
+                ],
+                correctAnswer: ["C", "D"],
+                userAnswer: [],
+                isCorrect: null
+            },
+            {
+                id: 8,
+                type: "单选题",
+                content: "针对工作票中安全交代栏的填写要求，以下说法正确的是（）",
+                options: [
+                    "A．此栏目中安全交代由工作负责人对工作班人员进行交代，并由安全班成员签名确认",
+                    "B．此栏目中安全交代由工作许可人对工作负责人进行交代，并双方签名确认",
+                    "C．此栏目中安全交代由工作许可人对工作班人员进行交代，并由安全班成员签名确认"
+                ],
+                correctAnswer: ["A"],
+                userAnswer: null,
+                isCorrect: null
+            },
+            {
+                id: 9,
+                type: "多选题",
+                content: "该工作在工作票接收环节，以下描述正确的是（）",
+                options: [
+                    "A．只能由工作许可人接收工作票",
+                    "B．由值班负责人接收工作票",
+                    "C．工作票必须提前24小时送达",
+                    "D．工作票应提前一日送达"
+                ],
+                correctAnswer: ["B", "D"],
+                userAnswer: [],
+                isCorrect: null
+            },
+            {
+                id: 10,
+                type: "单选题",
+                content: "为了按时完成工作，工作负责人张三临时增加工作班成员，以下说法正确的是（）",
+                options: [
+                    "A．工作负责人张三可不通知工作许可人，但需与工作票签发人办理变更手续，在工作负责人持有工作票上注明",
+                    "B．工作负责人张三可不通知工作票签发人，但需与工作许可人办理变更手续，在工作负责人持有工作票上注明",
+                    "C．工作负责人张三需与工作票签发人和工作许可人办理变更手续，在工作负责人持有工作票上注明"
+                ],
+                correctAnswer: ["A"],
+                userAnswer: null,
+                isCorrect: null
+            },
+            {
+                id: 11,
+                type: "单选题",
+                content: "以下说法正确的是（）",
+                options: [
+                    "A．工作票中应装设的接地线位置需变更时，应重新办理工作票",
+                    "B．工作票中应装设的接地线位置需变更时，线路工作时应由工作负责人征得工作票签发人同意，并在工作票上注明变更情况",
+                    "C．工作票中应装设的接地线位置需变更时，线路工作时应由工作负责人征得工作许可人同意，并在工作票上注明变更情况"
+                ],
+                correctAnswer: ["B"],
+                userAnswer: null,
+                isCorrect: null
+            },
+            {
+                id: 12,
+                type: "单选题",
+                content: "张三有事必须离开工作现场，变更为王五，以下说法正确的是（）",
+                options: [
+                    "A．张三应经工作票签发人同意并通知工作许可人，在工作票上记录变更情况和签名",
+                    "B．应重新办理工作票",
+                    "C．张三应经工作票许可人同意并通知工作签发人，在工作票上记录变更情况和签名"
+                ],
+                correctAnswer: ["B"],
+                userAnswer: null,
+                isCorrect: null
+            },
+            {
+                id: 13,
+                type: "单选题",
+                content: "该项工作，工作票中'工作地段'栏填写正确的是（）",
+                options: [
+                    "A．110kV中大站10kV大新线F20桂香阁公用配电站(G3025-1504)01配变0.4kV侧4054开关出线桂东路1巷6号至10号",
+                    "B．110kV中大站10kV大新线F20桂香阁公用配电站(G3025-1504)01配变0.4kV侧4054开关出线桂东路1巷5号至10号",
+                    "C．110kV中大站10kV大新线F20桂香阁公用配电站(G3025-1504)01配变0.4kV侧4054开关出线桂东路1巷6号至9号"
+                ],
+                correctAnswer: ["C"],
+                userAnswer: null,
+                isCorrect: null
+            },
+            {
+                id: 14,
+                type: "单选题",
+                content: "该项工作，不需要办理分组派工单，工作票中'工作班人员栏'，填写正确的是（）",
+                options: [
+                    "A．李四、张三、王五、赵六、钱七、刘八",
+                    "B．张三、王五、赵六、钱七、刘八",
+                    "C．李四、张三、王五、赵六、钱七"
+                ],
+                correctAnswer: ["B"],
+                userAnswer: null,
+                isCorrect: null
+            },
+            {
+                id: 15,
+                type: "单选题",
+                content: "本次作业需办理（）",
+                options: [
+                    "A．线路第一种工作票",
+                    "B．带电作业工作票",
+                    "C．低压配电网工作票",
+                    "D．书面形式布置和记录"
+                ],
+                correctAnswer: ["C"],
+                userAnswer: null,
+                isCorrect: null
+            }
+        ];
+
+ // 应用状态
+        let currentQuestionIndex = 0;
+        let answeredCount = 0;
+        let correctCount = 0;
+
+        // DOM元素
+        const questionNumberElement = document.getElementById('current-question-number');
+        const questionTypeElement = document.getElementById('question-type');
+        const questionContentElement = document.getElementById('question-content');
+        const optionsContainerElement = document.getElementById('options-container');
+        const feedbackElement = document.getElementById('feedback');
+        const feedbackTitleElement = document.getElementById('feedback-title');
+        const feedbackContentElement = document.getElementById('feedback-content');
+        const correctAnswerElement = document.getElementById('correct-answer');
+        const prevBtn = document.getElementById('prev-btn');
+        const submitBtn = document.getElementById('submit-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const progressTextElement = document.getElementById('progress-text');
+        const progressFillElement = document.getElementById('progress-fill');
+        const answeredTextElement = document.getElementById('answered-text');
+        const accuracyTextElement = document.getElementById('accuracy-text');
+        const scoreTextElement = document.getElementById('score-text');
+        const finalScoreElement = document.getElementById('final-score');
+        const questionNavElement = document.getElementById('question-nav');
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            initQuestionNavigation();
+            loadQuestion(currentQuestionIndex);
+            updateStats();
+            updateNavigationButtons();
+        });
+
+        // 初始化题目导航
+        function initQuestionNavigation() {
+            questionNavElement.innerHTML = '';
+            questions.forEach((question, index) => {
+                const navItem = document.createElement('div');
+                navItem.className = 'question-nav-item';
+                navItem.textContent = index + 1;
+                navItem.addEventListener('click', () => {
+                    loadQuestion(index);
+                });
+                questionNavElement.appendChild(navItem);
+            });
+        }
+
+        // 加载题目
+        function loadQuestion(index) {
+            currentQuestionIndex = index;
+            const question = questions[index];
+            
+            // 更新题目信息
+            questionNumberElement.textContent = question.id;
+            questionTypeElement.textContent = question.type;
+            questionContentElement.textContent = question.content;
+            
+            // 清空选项容器
+            optionsContainerElement.innerHTML = '';
+            
+            // 创建选项
+            question.options.forEach((option, optionIndex) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                
+                // 如果已经回答过，显示正确/错误状态
+                if (question.userAnswer !== null && 
+                    !(Array.isArray(question.userAnswer) && question.userAnswer.length === 0)) {
+                    const optionLetter = String.fromCharCode(65 + optionIndex);
+                    
+                    if (question.correctAnswer.includes(optionLetter)) {
+                        optionElement.classList.add('correct');
+                    } else if (
+                        (question.type === '单选题' && question.userAnswer === optionLetter) ||
+                        (question.type === '多选题' && question.userAnswer.includes(optionLetter))
+                    ) {
+                        optionElement.classList.add('incorrect');
+                    }
+                }
+                
+                // 如果用户已选择此选项，添加selected类
+                if (
+                    (question.type === '单选题' && question.userAnswer === String.fromCharCode(65 + optionIndex)) ||
+                    (question.type === '多选题' && Array.isArray(question.userAnswer) && 
+                     question.userAnswer.includes(String.fromCharCode(65 + optionIndex)))
+                ) {
+                    optionElement.classList.add('selected');
+                }
+                
+                optionElement.textContent = option;
+                optionElement.dataset.value = String.fromCharCode(65 + optionIndex);
+                
+                // 如果尚未回答，添加点击事件
+                if (question.userAnswer === null || (Array.isArray(question.userAnswer) && question.userAnswer.length === 0)) {
+                    optionElement.addEventListener('click', () => selectOption(optionElement, question.type));
+                }
+                
+                optionsContainerElement.appendChild(optionElement);
+            });
+            
+            // 更新反馈区域
+            updateFeedback(question);
+            
+            // 更新导航按钮
+            updateNavigationButtons();
+            
+            // 更新导航指示器
+            updateNavIndicators();
+            
+            // 更新提交按钮状态
+            updateSubmitButton();
+        }
+
+        // 选择选项
+        function selectOption(optionElement, questionType) {
+            const question = questions[currentQuestionIndex];
+            const selectedValue = optionElement.dataset.value;
+            
+            if (questionType === '单选题') {
+                // 清除所有选项的选中状态
+                document.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // 选中当前选项
+                optionElement.classList.add('selected');
+                question.userAnswer = selectedValue;
+            } else if (questionType === '多选题') {
+                // 切换选中状态
+                if (optionElement.classList.contains('selected')) {
+                    optionElement.classList.remove('selected');
+                    const index = question.userAnswer.indexOf(selectedValue);
+                    if (index > -1) {
+                        question.userAnswer.splice(index, 1);
+                    }
+                } else {
+                    optionElement.classList.add('selected');
+                    if (!question.userAnswer.includes(selectedValue)) {
+                        question.userAnswer.push(selectedValue);
+                    }
+                }
+            }
+            
+            // 更新提交按钮状态
+            updateSubmitButton();
+        }
+
+        // 更新提交按钮状态
+        function updateSubmitButton() {
+            const question = questions[currentQuestionIndex];
+            
+            if (question.userAnswer === null || 
+                (Array.isArray(question.userAnswer) && question.userAnswer.length === 0)) {
+                submitBtn.disabled = true;
+            } else {
+                submitBtn.disabled = false;
+            }
+        }
+
+        // 提交答案
+        submitBtn.addEventListener('click', function() {
+            const question = questions[currentQuestionIndex];
+            
+            if (question.userAnswer === null || 
+                (Array.isArray(question.userAnswer) && question.userAnswer.length === 0)) {
+                return;
+            }
+            
+            // 检查答案
+            let isCorrect = false;
+            
+            if (question.type === '单选题') {
+                isCorrect = question.userAnswer === question.correctAnswer[0];
+            } else if (question.type === '多选题') {
+                // 多选题需要完全匹配
+                if (question.userAnswer.length === question.correctAnswer.length) {
+                    isCorrect = question.userAnswer.every(answer => 
+                        question.correctAnswer.includes(answer));
+                }
+            }
+            
+            question.isCorrect = isCorrect;
+            
+            // 更新统计
+            if (question.isCorrect) {
+                correctCount++;
+            }
+            
+            answeredCount = questions.filter(q => q.userAnswer !== null && 
+                !(Array.isArray(q.userAnswer) && q.userAnswer.length === 0)).length;
+            
+            // 重新加载当前题目以显示正确答案
+            loadQuestion(currentQuestionIndex);
+            
+            // 更新统计信息
+            updateStats();
+        });
+
+        // 更新反馈区域
+        function updateFeedback(question) {
+            if (question.userAnswer === null || 
+                (Array.isArray(question.userAnswer) && question.userAnswer.length === 0)) {
+                feedbackElement.className = 'feedback';
+                return;
+            }
+            
+            if (question.isCorrect) {
+                feedbackElement.className = 'feedback correct';
+                feedbackTitleElement.textContent = '回答正确！';
+                feedbackContentElement.textContent = '您已正确回答了此题。';
+                correctAnswerElement.textContent = '';
+            } else {
+                feedbackElement.className = 'feedback incorrect';
+                feedbackTitleElement.textContent = '回答错误！';
+                feedbackContentElement.textContent = '您的答案不正确，正确答案如下：';
+                
+                // 显示正确答案
+                let correctAnswerText = '';
+                if (question.type === '单选题') {
+                    correctAnswerText = question.correctAnswer[0];
+                } else if (question.type === '多选题') {
+                    correctAnswerText = question.correctAnswer.join('、');
+                }
+                
+                correctAnswerElement.textContent = `正确答案：${correctAnswerText}`;
+            }
+        }
+
+        // 更新统计信息
+        function updateStats() {
+            const totalQuestions = questions.length;
+            const progressPercentage = ((currentQuestionIndex + 1) / totalQuestions) * 100;
+            const accuracy = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0;
+            const score = correctCount;
+            
+            progressTextElement.textContent = `${currentQuestionIndex + 1}/${totalQuestions}`;
+            progressFillElement.style.width = `${progressPercentage}%`;
+            answeredTextElement.textContent = `${answeredCount}`;
+            accuracyTextElement.textContent = `${accuracy}%`;
+            scoreTextElement.textContent = `${score}`;
+            finalScoreElement.textContent = `${score}`;
+        }
+
+        // 更新导航按钮
+        function updateNavigationButtons() {
+            prevBtn.disabled = currentQuestionIndex === 0;
+            nextBtn.disabled = currentQuestionIndex === questions.length - 1;
+            
+            // 如果当前题目已回答，启用下一题按钮
+            const question = questions[currentQuestionIndex];
+            if (question.userAnswer !== null && 
+                !(Array.isArray(question.userAnswer) && question.userAnswer.length === 0)) {
+                nextBtn.disabled = false;
+            }
+        }
+
+        // 更新导航指示器
+        function updateNavIndicators() {
+            const navItems = document.querySelectorAll('.question-nav-item');
+            navItems.forEach((item, index) => {
+                item.classList.remove('current', 'answered', 'answered-incorrect');
+                
+                if (index === currentQuestionIndex) {
+                    item.classList.add('current');
+                }
+                
+                const question = questions[index];
+                if (question.userAnswer !== null && 
+                    !(Array.isArray(question.userAnswer) && question.userAnswer.length === 0)) {
+                    
+                    if (question.isCorrect === true) {
+                        item.classList.add('answered');
+                    } else if (question.isCorrect === false) {
+                        item.classList.add('answered-incorrect');
+                    }
+                }
+            });
+        }
+
+        // 上一题按钮事件
+        prevBtn.addEventListener('click', function() {
+            if (currentQuestionIndex > 0) {
+                loadQuestion(currentQuestionIndex - 1);
+            }
+        });
+
+        // 下一题按钮事件
+        nextBtn.addEventListener('click', function() {
+            if (currentQuestionIndex < questions.length - 1) {
+                loadQuestion(currentQuestionIndex + 1);
+            }
+        });
+    </script>
+</body>
+</html>
