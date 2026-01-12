@@ -1,11 +1,161 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>PakePlus</title>
-    </head>
-    <body>
-        PakePlus
-    </body>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>电力安全刷题工具</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        #container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .options {
+            margin-left: 20px;
+        }
+        .option {
+            margin-bottom: 8px;
+            padding: 5px;
+        }
+        .option:hover {
+            background-color: #f0f0f0;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+        .wrong {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        #submit {
+            background-color: #28a745;
+            color: white;
+        }
+        #prev {
+            background-color: #6c757d;
+            color: white;
+        }
+        #next {
+            background-color: #007bff;
+            color: white;
+        }
+        #score {
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+        }
+        .question-type {
+            margin-bottom: 10px;
+        }
+        .type-tag {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #6c757d;
+            color: white;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+        .type-buttons {
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .type-btn {
+            background-color: #6c757d;
+            color: white;
+        }
+        .type-btn.active {
+            background-color: #495057;
+        }
+        .navigation-info {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #666;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>电力安全刷题工具</h1>
+        
+        <!-- 题目类型切换 -->
+        <div class="type-buttons">
+            <button id="type-all" class="type-btn active">全部题目</button>
+            <button id="type-multiple" class="type-btn">多选题</button>
+            <button id="type-single" class="type-btn">单选题</button>
+            <button id="type-judge" class="type-btn">判断题</button>
+        </div>
+        
+        <div id="question-type-display" style="margin-bottom: 10px; font-size: 14px; color: #666;"></div>
+        
+        <div id="question-container"></div>
+        <div id="result-container" class="result"></div>
+        
+        <div id="button-container">
+            <button id="prev">上一题</button>
+            <button id="submit">提交答案</button>
+            <button id="next">下一题</button>
+        </div>
+        
+        <div class="navigation-info">
+            <small>提示：按 ← 键上一题，Enter 键提交答案，→ 键下一题</small>
+        </div>
+        
+        <div id="score">
+            得分：<span id="score-value">0</span> / <span id="total-questions">0</span>
+            <span id="accuracy" style="float: right;"></span>
+        </div>
+    </div>
+
+    <!-- 引入题目数据文件 -->
+    <script src="multiple-questions.js"></script>
+    <script src="single-questions.js"></script>
+    <script src="judge-questions.js"></script>
+    <script src="script.js"></script>
+<div id="debug" style="display:none; margin-top: 20px; padding: 10px; background: #f0f0f0; border-radius: 5px;">
+    <h4>调试信息</h4>
+    <div id="debug-info"></div>
+</div>
+
+<script>
+    // 调试模式
+    const DEBUG = false; // 设置为 true 显示调试信息
+    
+    if (DEBUG) {
+        document.getElementById('debug').style.display = 'block';
+    }
+</script>
+</body>
 </html>
